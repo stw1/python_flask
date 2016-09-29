@@ -4,11 +4,19 @@
 	<meta charset="utf-8">
 	<title>Depth of Knowledge</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+<!-- 	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet"> -->
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+
+
+    <!-- Modal Friendly -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.9/js/bootstrap-dialog.min.js"></script>
+
 	<script type=text/javascript>
 		$(function() {
 		  $('a#process_input').bind('click', function() {
@@ -21,31 +29,90 @@
 		  });
 		});
 	</script>
-
+	<style>
+	    .login-dialog .modal-dialog {
+	        width: 300px;
+	    }
+	</style>
 </head>
 
 
 
-<body>
+<body style="padding-bottom: 100px;">
+	<div class="row">
+		<div class='container col-md-12'>
+			<span class="pull-right">
+			    <div class="source-code runnable">
+		<!--         var $textAndPic = $('<div></div>');
+		        $textAndPic.append('<h3>Tips</h3>');
+		        $textAndPic.append('<h4>Level 1: Recall and Reproduction</h4>');
+		        $textAndPic.append("Tasks at this level require recall of facts or rote application of simple procedures. The task does not require any cognitive effort beyond remembering the right response or formula. Copying, computing, defining, and recognizing are typical Level 1 tasks.");
 
-	<div class='container'>
-	<h2>Question:</h2>
-		<p>Type in a question to be categorized using Norman Webb's Depth of Knowledge Levels. Depth of Knowledge (DoK) categorizes tasks according to the complexity of thinking required to successfully complete them.</p>
-		<form>
-			<input class=input-lg type=text size=40 name=proglang>
-			<a href=# id=process_input><button class='btn btn-primary btn-default'>Submit</button></a>
-		</form>
-	<p id=result></p>
+		        $textAndPic.append('<h4>Level 2: Skills and Concepts</h4>');
+				$textAndPic.append("At this level, a student must make some decisions about his or her approach. Tasks with more than one mental step such as comparing, organizing, summarizing, predicting, and estimating are usually Level 2.");
+
+		        $textAndPic.append('<h4>Level 3: Strategic Thinking</h4>');
+				$textAndPic.append("At this level of complexity, students must use planning and evidence, and thinking is more abstract. A task with multiple valid responses where students must justify their choices would be Level 3. Examples include solving non-routine problems, designing an experiment, or analyzing characteristics of a genre.");
+
+		        $textAndPic.append('<h4>Level 4: Extended Thinking</h4>');
+				$textAndPic.append("Level 4 tasks require the most complex cognitive effort. Students synthesize information from multiple sources, often over an extended period of time, or transfer knowledge from one domain to solve problems in another. Designing a survey and interpreting the results, analyzing multiple texts by to extract themes, or writing an original myth in an ancient style would all be examples of Level 4.");
+
+		        $textAndPic.append('<h4>Raw Output in JSON</h4>');
+				$textAndPic.append('<p>Raw output can be found by adding this to the URL "background_process?proglang="SOMETHING Here".</p>');
+				$textAndPic.append('<p>For example, background_process?proglang=%27how%20many%20years%20will%20i%20live?%27</p>');
+		        BootstrapDialog.show({
+            		title: 'DOK Help Guide',
+            		message: $textAndPic,
+		        }); -->
+        
+	    		</div>
+    		</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class='container col-md-1'></div>
+		<div class='container col-md-10'>
+		<h2>Question:</h2>
+			<p>Type in a question to be categorized using Norman Webb's Depth of Knowledge Levels. Depth of Knowledge (DoK) categorizes tasks according to the complexity of thinking required to successfully complete them.</p>
+			<form>
+				<input class=input-lg type=text size=40 name=proglang>
+				<a href=# id=process_input><button class='btn btn-primary btn-default'>Submit</button></a>
+			</form>
+		<br></br>
+		<p id=result></p>
+		</div>
+		<div class='container col-md-1'></div>
 	</div>
 
-	<div class='container'>
-		<h3>Tips</h3>
-		<p>Raw output can be found by adding this to the URL "background_process?proglang='SOMETHING Here'".</p>
-		<p>For example, background_process?proglang=%27how%20many%20years%20will%20i%20live?%27</p>
-	</div>		
 
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+
+
+<!-- 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>	
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> -->
+<script type="text/javascript">
+$(function(){
+    $('.source-code').each(function(index){
+        var $section = $(this);
+        var code = $(this).html().replace('<!--', '').replace('-->', '');
+        
+        // Code preview
+        // var $codePreview = $('<pre class="prettyprint lang-javascript"></pre>');
+        // $codePreview.text(code);
+        // $section.html($codePreview);
+        
+        // Run code
+        if($section.hasClass('runnable')){
+            var $button = $('<button class="btn btn-primary">Help</button>');
+            $button.on('click', {code: code}, function(event){
+                eval(event.data.code);
+            });
+            $button.insertAfter($section);
+            $('<div class="clearfix" style="margin-bottom: 10px;"></div>').insertAfter($button);
+        }
+    });
+});
+</script>
 
 </body>
 
