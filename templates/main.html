@@ -6,23 +6,40 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+	<script type=text/javascript>
+		$(function() {
+		  $('a#process_input').bind('click', function() {
+			$.getJSON('/background_process', {
+			  proglang: $('input[name="proglang"]').val(),
+			}, function(data) {
+			  $("#result").text(data.result);
+			});
+			return false;
+		  });
+		});
+	</script>
+
 </head>
 
 
 
 <body>
 
-	<div class="container">
-  		<h2>Question:</h2>
-  		<p>Type in a question to be categorized using Norman Webb's <a href="http://static.pdesas.org/content/documents/M1-Slide_19_DOK_Wheel_Slide.pdf">Depth of Knowledge</a> Levels.  Depth of Knowledge (DoK) categorizes tasks according to the complexity of thinking required to successfully complete them.</p>
-  		<form>
-    		<div class="form-group">
-     			<label for="comment">Text Box:</label>
-     			<textarea class="form-control" rows="5" id="comment"></textarea>
-    		</div>
-    		<button class="btn btn-lg btn-primary btn-block" type="button">Submit </button>
-  		</form>
+	<div class='container'>
+	<h2>Question:</h2>
+		<p>Type in a question to be categorized using Norman Webb's Depth of Knowledge Levels. Depth of Knowledge (DoK) categorizes tasks according to the complexity of thinking required to successfully complete them.</p>
+		<form>
+			<input class=input-lg type=text size=40 name=proglang>
+			<a href=# id=process_input><button class='btn btn-primary btn-default'>Submit</button></a>
+		</form>
+	<p id=result></p>
 	</div>
+
+
+
 
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
