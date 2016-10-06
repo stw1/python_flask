@@ -9,7 +9,7 @@ based on the guide
 * source web_nlp_env/bin/activate
 * pip install gunicorn flask
 * To launch the app
-.* gunicorn --bind 0.0.0.0:8000 wsgi
+  * gunicorn --bind 0.0.0.0:8000 wsgi
 
 
 
