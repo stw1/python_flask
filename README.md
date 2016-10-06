@@ -8,6 +8,9 @@ based on the guide
 ## Steps ##
 * source web_nlp_env/bin/activate
 * pip install gunicorn flask
+* To launch the app
+** gunicorn --bind 0.0.0.0:8000 wsgi
+
 
 
 ## 520 Bad Gateway ##
